@@ -129,34 +129,52 @@ String.prototype.divide = function (string) {
 /*String.multiply(string): This function should take another string as input
  and return the result of multiplying the two strings together.*/
 
-String.prototype.multiply = function (string) {
+String.prototype.multiply = function (multiplier) {
+    let multiplicandCursor;
+    let multiplierCursor = multiplier.length-1;
+    let multiplierNum, multiplicandNum, temp, carry, tempResult = "0", result = "0";
 
-    const zero = "0".repeat((string.length));
-    const one = zero.plus("1");
+    for(multiplierCursor; multiplierCursor>=0; multiplierCursor--){
+        multiplicandCursor = this.length-1;
+        multiplierNum = (multiplier.charCodeAt(multiplierCursor) - CHAR_CODE_ZERO);
+        carry = 0;
 
-    let temp = string;
-    let result = "0";
+        while(multiplicandCursor >=0){
+            multiplicandNum = this.charCodeAt(multiplicandCursor) - CHAR_CODE_ZERO;
 
-    if (temp.compare(zero) === 0)
-        return "0";
+            temp = (multiplierNum * multiplicandNum) + carry;
+            carry = (temp - (temp % 10)) / 10;
+            tempResult = tempResult.plus(((temp%10).toString() + "0".repeat((this.length-1)-multiplicandCursor)));
 
+            --multiplicandCursor;
+        }
 
-    while (temp.compare(zero) > 0) {
-        result = result.plus(this);
-        temp = temp.minus(one);
+        if(carry !== 0){
+            tempResult = tempResult.plus((carry.toString() + "0".repeat((this.length-1)-multiplicandCursor)))
+        }
+
+        result = result.plus(tempResult + "0".repeat((multiplier.length-1)-multiplierCursor));
+        tempResult = "0"
+
     }
 
+
     return result;
+
 }
 
-console.log("9007199254740992".plus("112312"));
+
+console.log("9007199254740992".plus("90999999999999999999999999099999999999999999999999"));
 console.log(9007199254740992n + 112312n);
 
-console.log("90071992547409911111111115".minus("231"));
+console.log("9099999999999999999999999909999999999999999999999999999999999".minus("90999999999999999999999999099999999999999999999999"));
 console.log(90071992547409911111111115n - 231n);
 
 console.log("180143985094819822222222230".divide("90071992547409911111111115"));
 console.log(180143985094819822222222230n / 90071992547409911111111115n);
 
-console.log("180143985094819822222222230".multiply("2"));
-console.log(180143985094819822222222230n * 2n);
+console.log("180143985094819822222222230".multiply("90071992547409911111111115"));
+console.log(180143985094819822222222230n * 90071992547409911111111115n);
+
+//XD
+console.log("4".multiply("3"));
