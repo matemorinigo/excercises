@@ -13,7 +13,7 @@ String.prototype.compare = function (string) {
 
             if (a > b)
                 return 1;
-            else if (b < a)
+            else if (b > a)
                 return -1;
         }
         return 0;
@@ -109,17 +109,19 @@ String.prototype.minus = function (string) {
  result in an integer value.*/
 
 String.prototype.divide = function (string) {
-    let temp = this;
+    let temp = string;
     let result = 0;
-    let zero = "0".repeat(temp.length);
+    let zero = "0";
+    let i = 2;
 
-    if (string.compare(zero) === 0)
+    if (string.compare(zero.repeat(string.length)) === 0)
         throw "Division by zero";
 
     //Im not sure about this way to solve the comparison with 0
-    while (temp.compare(zero) > 0) {
-        temp = temp.minus(string);
+    while (this.compare(temp) >= 0) {
+        temp = string.multiply(i.toString());
         ++result;
+        ++i;
     }
 
     return result.toString();
@@ -164,17 +166,18 @@ String.prototype.multiply = function (multiplier) {
 }
 
 
-console.log("9007199254740992".plus("90999999999999999999999999099999999999999999999999"));
-console.log(9007199254740992n + 112312n);
+console.log("9099999999999999999999999909999999999999999993242419999999999999999".plus("93223999999999909777777799999995444444"));
+console.log(9099999999999999999999999909999999999999999993242419999999999999999n + 93223999999999909777777799999995444444n);
 
-console.log("9099999999999999999999999909999999999999999999999999999999999".minus("90999999999999999999999999099999999999999999999999"));
-console.log(90071992547409911111111115n - 231n);
+console.log("9099999999999999999999999909999999999999999993242419999999999999999".minus("93223999999999909777777799999995444444"));
+console.log(9099999999999999999999999909999999999999999993242419999999999999999n - 93223999999999909777777799999995444444n);
 
-console.log("180143985094819822222222230".divide("90071992547409911111111115"));
-console.log(180143985094819822222222230n / 90071992547409911111111115n);
+console.log("9099999999".divide("93223"));
+console.log(9099999999n / 93223n);
 
-console.log("180143985094819822222222230".multiply("90071992547409911111111115"));
-console.log(180143985094819822222222230n * 90071992547409911111111115n);
+
+console.log("9099999999999999999999999909999999999999999993242419999999999999999".multiply("93223999999999909777777799999995444444"));
+console.log(9099999999999999999999999909999999999999999993242419999999999999999n * 93223999999999909777777799999995444444n);
 
 //XD
 console.log("4".multiply("3"));
