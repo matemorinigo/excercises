@@ -1,15 +1,28 @@
 const CHAR_CODE_ZERO = 48;
 
+String.prototype.deleteLeftZero = function(){
+    let cursor = 0;
+    let trimmed = this;
+    while(cursor<this.length-1 && (this.charCodeAt(cursor)-CHAR_CODE_ZERO) === 0){
+        trimmed = this.substring(++cursor,this.length);
+    }
+
+    return trimmed;
+}
+
 String.prototype.compare = function (string) {
-    if (this.length > string.length)
+    let thisTrimmed = this.deleteLeftZero();
+    let stringTrimmed = string.deleteLeftZero();
+
+    if (thisTrimmed.length > stringTrimmed.length)
         return 1;
-    else if (string.length > this.length)
+    else if (stringTrimmed.length > thisTrimmed.length)
         return -1;
     else {
         let a, b;
         for (let i = 0; i < this.length; i++) {
-            a = this.charCodeAt(i) - CHAR_CODE_ZERO;
-            b = string.charCodeAt(i) - CHAR_CODE_ZERO;
+            a = thisTrimmed.charCodeAt(i) - CHAR_CODE_ZERO;
+            b = stringTrimmed.charCodeAt(i) - CHAR_CODE_ZERO;
 
             if (a > b)
                 return 1;
@@ -108,23 +121,31 @@ String.prototype.minus = function (string) {
  the result of dividing the first string by the second string. Division should only
  result in an integer value.*/
 
-String.prototype.divide = function (string) {
-    let temp = string;
-    let result = 0;
-    let zero = "0";
-    let i = 2;
+String.prototype.divide = function (divisor) {
+    let charsAgarrados = 1;
+    let dividendoTemp = this.substring(0,charsAgarrados);
+    let charsLeft = this.length-1;
+    let temp = this;
+    let result = "0";
 
-    if (string.compare(zero.repeat(string.length)) === 0)
-        throw "Division by zero";
+    while(charsLeft >= 0 && charsAgarrados<=this.length){
 
-    //Im not sure about this way to solve the comparison with 0
-    while (this.compare(temp) >= 0) {
-        temp = string.multiply(i.toString());
-        ++result;
-        ++i;
+        if(divisor.compare(dividendoTemp) > 0){
+            dividendoTemp = temp.substring(0,++charsAgarrados);
+            --charsLeft;
+        }
+        else{
+            temp = dividendoTemp.minus(divisor).deleteLeftZero() + temp.substring(charsAgarrados, temp.length);
+            result = result.plus("1" + "0".repeat(charsLeft));
+            dividendoTemp = temp.substring(0,1);
+            charsLeft = temp.length-1;
+            charsAgarrados = 1;
+        }
+
+
     }
+    return result;
 
-    return result.toString();
 
 }
 
@@ -165,17 +186,19 @@ String.prototype.multiply = function (multiplier) {
 
 }
 
-
+console.log();
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".plus("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n + 93223999999999909777777799999995444444n);
 
+console.log();
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".minus("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n - 93223999999999909777777799999995444444n);
 
-console.log("9099999999".divide("93223"));
-console.log(9099999999n / 93223n);
+console.log();
+console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("932239999999999097777777999999954444"));
+console.log(9099999999999999999999999909999999999999999993242419999999999999999n / 932239999999999097777777999999954444n);
 
-
+console.log();
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".multiply("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n * 93223999999999909777777799999995444444n);
 
