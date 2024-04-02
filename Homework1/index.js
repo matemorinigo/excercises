@@ -1,5 +1,6 @@
 const CHAR_CODE_ZERO = 48;
 
+
 String.prototype.deleteLeftZero = function(){
     let cursor = 0;
     let trimmed = this;
@@ -36,20 +37,20 @@ String.prototype.compare = function (string) {
 /*String.plus(string): This function should take another string
  as input and return the result of adding the two strings together.*/
 
-String.prototype.plus = function (string) {
+String.prototype.plus = function (addend) {
     let strCursor1 = this.length - 1;
-    let strCursor2 = string.length - 1;
+    let strCursor2 = addend.length - 1;
     let a, b, c;
     let carry = 0;
-    let temp = ""
+    let sum = ""
 
 
     while (strCursor1 >= 0 && strCursor2 >= 0) {
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO;
-        b = string.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
+        b = addend.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
         c = a + b + carry;
         carry = (c - (c % 10)) / 10;
-        temp = (c % 10).toString() + temp;
+        sum = (c % 10).toString() + sum;
 
         --strCursor1;
         --strCursor2;
@@ -59,19 +60,19 @@ String.prototype.plus = function (string) {
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO;
         c = a + carry;
         carry = (c - (c % 10)) / 10;
-        temp = "".concat((c % 10).toString(), temp);
+        sum = "".concat((c % 10).toString(), sum);
         --strCursor1;
     }
 
     while (strCursor2 >= 0) {
-        b = string.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
+        b = addend.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
         c = b + carry;
         carry = (c - (c % 10)) / 10;
-        temp = "".concat((c % 10).toString(), temp);
+        sum = "".concat((c % 10).toString(), sum);
         --strCursor2;
     }
 
-    return temp;
+    return sum;
 
 }
 
@@ -79,19 +80,19 @@ String.prototype.plus = function (string) {
  and return the result of subtracting the second string from the first string.
  Note that the first parameter will always be greater than the second parameter*/
 
-String.prototype.minus = function (string) {
-    if (this.compare(string) === -1)
+String.prototype.minus = function (substrahend) {
+    if (this.compare(substrahend) === -1)
         throw "Second parameter is greater than the first parameter";
 
     let strCursor1 = this.length - 1;
-    let strCursor2 = string.length - 1;
+    let strCursor2 = substrahend.length - 1;
     let loan = 0;
     let a, b, c;
-    let tempString = "";
+    let difference = "";
 
     while (strCursor1 >= 0 && strCursor2 >= 0) {
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO - loan;
-        b = string.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
+        b = substrahend.charCodeAt(strCursor2) - CHAR_CODE_ZERO;
 
         if (a < b) {
             loan = 1;
@@ -100,7 +101,7 @@ String.prototype.minus = function (string) {
             loan = 0;
 
         c = a - b;
-        tempString = c + tempString;
+        difference = c + difference;
 
         --strCursor1;
         --strCursor2;
@@ -118,13 +119,13 @@ String.prototype.minus = function (string) {
                 loan = 0;
         }
 
-        tempString = a + tempString;
+        difference = a + difference;
         c = a;
         --strCursor1;
     }
 
 
-    return tempString.deleteLeftZero().toString();
+    return difference.deleteLeftZero().toString();
 }
 
 /*String.divide(string): This function should take another string as input and return
@@ -132,29 +133,29 @@ String.prototype.minus = function (string) {
  result in an integer value.*/
 
 String.prototype.divide = function (divisor) {
-    let charsAgarrados = 1;
-    let dividendoTemp = this.substring(0,charsAgarrados);
+    let selectedChars = 1;
+    let selectedDividend = this.substring(0,selectedChars);
     let charsLeft = this.length-1;
-    let temp = this;
-    let result = "0";
+    let tempDividend = this;
+    let quotient = "0";
 
-    while(charsLeft >= 0 && charsAgarrados<=this.length){
+    while(charsLeft >= 0 && selectedChars<=this.length){
 
-        if(divisor.compare(dividendoTemp) > 0){
-            dividendoTemp = temp.substring(0,++charsAgarrados);
+        if(divisor.compare(selectedDividend) > 0){
+            selectedDividend = tempDividend.substring(0,++selectedChars);
             --charsLeft;
         }
         else{
-            temp = dividendoTemp.minus(divisor).deleteLeftZero() + temp.substring(charsAgarrados, temp.length);
-            result = result.plus("1" + "0".repeat(charsLeft));
-            dividendoTemp = temp.substring(0,1);
-            charsLeft = temp.length-1;
-            charsAgarrados = 1;
+            tempDividend = selectedDividend.minus(divisor).deleteLeftZero() + tempDividend.substring(selectedChars, tempDividend.length);
+            quotient = quotient.plus("1" + "0".repeat(charsLeft));
+            selectedDividend = tempDividend.substring(0,1);
+            charsLeft = tempDividend.length-1;
+            selectedChars = 1;
         }
 
 
     }
-    return result;
+    return quotient;
 
 
 }
@@ -162,20 +163,20 @@ String.prototype.divide = function (divisor) {
 /*String.multiply(string): This function should take another string as input
  and return the result of multiplying the two strings together.*/
 
-String.prototype.multiply = function (multiplier) {
+String.prototype.multiply = function (factor) {
     let multiplicandCursor;
-    let multiplierCursor = multiplier.length-1;
-    let multiplierNum, multiplicandNum, temp, carry, tempResult = "0", result = "0";
+    let factorCursor = factor.length-1;
+    let factorNum, multiplicandNum, temp, carry, tempResult = "0", result = "0";
 
-    for(multiplierCursor; multiplierCursor>=0; multiplierCursor--){
+    for(factorCursor; factorCursor>=0; factorCursor--){
         multiplicandCursor = this.length-1;
-        multiplierNum = (multiplier.charCodeAt(multiplierCursor) - CHAR_CODE_ZERO);
+        factorNum = (factor.charCodeAt(factorCursor) - CHAR_CODE_ZERO);
         carry = 0;
 
         while(multiplicandCursor >=0){
             multiplicandNum = this.charCodeAt(multiplicandCursor) - CHAR_CODE_ZERO;
 
-            temp = (multiplierNum * multiplicandNum) + carry;
+            temp = (factorNum * multiplicandNum) + carry;
             carry = (temp - (temp % 10)) / 10;
             tempResult = tempResult.plus(((temp%10).toString() + "0".repeat((this.length-1)-multiplicandCursor)));
 
@@ -186,7 +187,7 @@ String.prototype.multiply = function (multiplier) {
             tempResult = tempResult.plus((carry.toString() + "0".repeat((this.length-1)-multiplicandCursor)))
         }
 
-        result = result.plus(tempResult + "0".repeat((multiplier.length-1)-multiplierCursor));
+        result = result.plus(tempResult + "0".repeat((factor.length-1)-factorCursor));
         tempResult = "0"
 
     }
@@ -196,26 +197,28 @@ String.prototype.multiply = function (multiplier) {
 
 }
 
-console.log();
+console.log("plus");
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".plus("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n + 93223999999999909777777799999995444444n);
 
 console.log();
+console.log("minus");
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".minus("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n - 93223999999999909777777799999995444444n);
 
 console.log();
+console.log("divide");
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n / 93223999999999909777777799999995444444n);
 
 console.log();
+console.log("multiply");
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".multiply("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n * 93223999999999909777777799999995444444n);
 
-//XD
+console.log();
 console.log("4".multiply("3"));
 console.log("1000".minus("1"));
 
-console.log();
 
 
