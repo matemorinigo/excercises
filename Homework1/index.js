@@ -87,7 +87,7 @@ String.prototype.minus = function (string) {
     let strCursor2 = string.length - 1;
     let loan = 0;
     let a, b, c;
-    let temp = "";
+    let tempString = "";
 
     while (strCursor1 >= 0 && strCursor2 >= 0) {
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO - loan;
@@ -100,21 +100,31 @@ String.prototype.minus = function (string) {
             loan = 0;
 
         c = a - b;
-        temp = c + temp;
+        tempString = c + tempString;
 
         --strCursor1;
         --strCursor2;
     }
 
     while (strCursor1 >= 0) {
+
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO - loan;
-        temp = a + temp;
-        loan = 0;
+
+        if(loan === 1 && strCursor1 !==0){
+            if (a<c) {
+                loan = 1;
+                a += 10;
+            } else
+                loan = 0;
+        }
+
+        tempString = a + tempString;
+        c = a;
         --strCursor1;
     }
 
 
-    return temp;
+    return tempString.deleteLeftZero().toString();
 }
 
 /*String.divide(string): This function should take another string as input and return
@@ -195,8 +205,8 @@ console.log("9099999999999999999999999909999999999999999993242419999999999999999
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n - 93223999999999909777777799999995444444n);
 
 console.log();
-console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("932239999999999097777777999999954444"));
-console.log(9099999999999999999999999909999999999999999993242419999999999999999n / 932239999999999097777777999999954444n);
+console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("93223999999999909777777799999995444444"));
+console.log(9099999999999999999999999909999999999999999993242419999999999999999n / 93223999999999909777777799999995444444n);
 
 console.log();
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".multiply("93223999999999909777777799999995444444"));
@@ -204,3 +214,8 @@ console.log(9099999999999999999999999909999999999999999993242419999999999999999n
 
 //XD
 console.log("4".multiply("3"));
+console.log("1000".minus("1"));
+
+console.log();
+
+
