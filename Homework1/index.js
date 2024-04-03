@@ -1,5 +1,6 @@
 const CHAR_CODE_ZERO = 48;
 
+const DivisionByZeroException = require('./DivisionByZeroException');
 
 String.prototype.deleteLeftZero = function(){
     let cursor = 0;
@@ -112,7 +113,7 @@ String.prototype.minus = function (substrahend) {
         a = this.charCodeAt(strCursor1) - CHAR_CODE_ZERO - loan;
 
         if(loan === 1 && strCursor1 !==0){
-            if (a<c) {
+            if (a<loan) {
                 loan = 1;
                 a += 10;
             } else
@@ -138,6 +139,10 @@ String.prototype.divide = function (divisor) {
     let charsLeft = this.length-1;
     let tempDividend = this;
     let quotient = "0";
+
+    if(divisor.compare("0") === 0){
+        throw new DivisionByZeroException("Division by zero");
+    }
 
     while(charsLeft >= 0 && selectedChars<=this.length){
 
@@ -203,11 +208,17 @@ console.log(9099999999999999999999999909999999999999999993242419999999999999999n
 
 console.log();
 console.log("minus");
-console.log("9099999999999999999999999909999999999999999993242419999999999999999".minus("93223999999999909777777799999995444444"));
-console.log(9099999999999999999999999909999999999999999993242419999999999999999n - 93223999999999909777777799999995444444n);
+console.log("4444444444444444444444444444444440".minus("2"));
+console.log(4444444444444444444444444444444440n - 2n);
 
 console.log();
 console.log("divide");
+
+try {
+    console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("0"));
+}catch(e){
+    console.error(e);
+}
 console.log("9099999999999999999999999909999999999999999993242419999999999999999".divide("93223999999999909777777799999995444444"));
 console.log(9099999999999999999999999909999999999999999993242419999999999999999n / 93223999999999909777777799999995444444n);
 
