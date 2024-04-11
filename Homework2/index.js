@@ -115,3 +115,19 @@ try{
     console.error(e);
 }
 
+//coerceToType() test cases
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
+
+console.log(typeof dT.coerceToType(123,"string"));
+console.log(typeof dT.coerceToType(123,"bigint"));
+console.log(typeof dT.coerceToType(123,"boolean"));
+console.log(typeof dT.coerceToType(-0,"boolean"));
+console.log(typeof dT.coerceToType(-0,"object"));
+console.log(typeof dT.coerceToType(912,"number"));

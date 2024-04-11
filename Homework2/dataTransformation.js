@@ -6,9 +6,11 @@ function addValues(a,b){
     if(typeof a !== typeof b)
         throw Error("Parameters are of differents data types");
 
+    //From this point, a and b are of the same type
+
     if(typeof a === "number" && !isNaN(a) && !isNaN(b)){
         return a+b;
-    }
+    } //if both are bigints -> a+b should return the addition, and if both are strings a+b should return the concat
     else if(typeof a === "bigint" || typeof a === "string"){
         return a + b
     }
@@ -35,12 +37,8 @@ function stringifyValue(value){
     if(typeof value === "object"){
         return JSON.stringify(value);
     }
-    else if(value !== undefined){
-        return value.toString();
-    }
-    else{
-        throw Error("Undefined value");
-    }
+    else
+        return String(value);
 }
 
 
@@ -86,6 +84,9 @@ function convertToNumber(value){
             throw Error("Value cannot be converted");
         }
     }
+    else if(typeof  value === "number"){
+        return value;
+    }
     else{
         throw Error("Value cannot be converted");
     }
@@ -97,33 +98,55 @@ attempts to convert the value to the specified type using type
 coercion. The function should return the coerced value if successful.
 If the coercion is not possible, it should throw an error.*/
 
-function coerceToType(value, type){
-
-    if(type === undefined){
-        throw Error("Cannot convert value to undefined");
+function convertToBigint(value){
+    switch (typeof value){
+        case "undefined":
+            throw Error("Cannot convert undefined");
+        case "bigint":
+            return value;
+        case "string":
+            let str;
+            if(value.includes(".")){
+                str = parseFloat(value);
+            }
+            else{
+                str = parseInt(value);
+            }
+            return BigInt(value);
+        case "number":
+            return BigInt(value);
+        case "boolean":
+            if(value)
+                return BigInt(1);
+            else
+                return BigInt(0);
+        default:
+            throw Error("Cannot convert value to bigint");
     }
-    else if(type === "string"){
-        //if typeof value === str
-        //else if === number
-        //else if === bigint
-        //etc
-        //or
-        //stringifyValue(value)???
-    }else if(type === "number"){
-        //if typeof value === str
-        //else if === number
-        //else if === bigint
-        //etc
-        //or
-        //convertToNumber(value)???
-    }else if(type === "bigint"){
 
-    }else if(type === "object"){
-        //It is possible to convert value into an object??? -> Should throw an error when type is object?
-    }else{
-        throw Error("Type doesnt exists");
-    }
 }
 
-module.exports = {addValues, stringifyValue, invertBoolean, convertToNumber};
+function coerceToType(value, type){
+
+    switch (type){
+        case undefined:
+            throw Error("Cannot convert value to undefined");
+        case "string":
+            return stringifyValue(value);
+        case "number":
+            return convertToNumber(value);
+        case "bigint":
+            return convertToBigint(value);
+        case "boolean":
+            return Boolean(value);
+        case "object":
+            return JSON.parse('{"value": '+String(value)+"}");
+        default:
+            throw Error("Type doesnt exists");
+    }
+
+}
+
+
+module.exports = {addValues, stringifyValue, invertBoolean, convertToNumber, coerceToType};
 
