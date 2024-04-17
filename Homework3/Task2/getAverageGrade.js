@@ -1,4 +1,4 @@
-const {Student} = require('./util/Student');
+const {Student} = require('../util/Student');
 
 //Im not understanding the point free style :(
 const getGrades = x => x.reduce((x,y) => x+y.getGrade(),0);

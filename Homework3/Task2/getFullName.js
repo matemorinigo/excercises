@@ -1,4 +1,4 @@
-const p = require('./util/Person');
+const p = require('../util/Person');
 
 function getFullName(person){
     if(person === null || person === undefined)
