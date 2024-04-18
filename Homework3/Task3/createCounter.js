@@ -6,10 +6,6 @@ const createCounter = () => {
     };
 }
 
-const a = createCounter();
-const b = createCounter();
+module.exports = {createCounter};
 
-console.log(a());
-console.log(a());
-console.log(a());
 

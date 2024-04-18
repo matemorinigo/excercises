@@ -1,5 +1,3 @@
-const {spacesWithMsg} = require("../util/spacesWithMsg");
-
 function power(base,exp, acum=1n){
     if(exp<=0){
         return BigInt(acum);
@@ -18,20 +16,5 @@ function powerWithoutTCO(base,exp){
     }
 }
 
-console.log(power(6600,6600));
+module.exports = {power,powerWithoutTCO};
 
-spacesWithMsg(10, "---------------------------WITHOUT TCO-------------------------------");
-
-console.log(powerWithoutTCO(7600,7600));
-
-spacesWithMsg(10,"---------------------------TCO Exceed the stack faster than without TCO-------------------------------");
-
-try{
-    console.log(power(8600,8600));
-}catch (e) {
-    console.error(e);
-}
-
-spacesWithMsg(10, "---------------------------WITHOUT TCO-------------------------------");
-
-console.log(powerWithoutTCO(8600,8600));

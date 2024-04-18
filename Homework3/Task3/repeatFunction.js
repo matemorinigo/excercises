@@ -9,9 +9,5 @@ function repeatFunction(fn, n){
     }
 }
 
-function printf(){
-    console.log("printf");
-}
+module.exports = {repeatFunction};
 
-let a = repeatFunction(printf, -1);
-a();

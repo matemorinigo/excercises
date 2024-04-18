@@ -3,7 +3,7 @@ function calculateTotalPrice(products){
 
     for(let product of products){
         //validate price>0?
-        totalPrice+=product;
+        totalPrice+=product.price;
     }
 
     return totalPrice;
@@ -11,4 +11,3 @@ function calculateTotalPrice(products){
 
 module.exports = {calculateTotalPrice};
 
-console.log(calculateTotalPrice([10,10,10,20,25]));

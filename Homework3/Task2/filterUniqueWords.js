@@ -1,4 +1,7 @@
-const getWords = x => x.match(/[a-zA-Z]+/g);
-const filterUniqueWords = x => [...new Set(x)];
+const lowerCase = x => x !== null ? x.map((x)=>x.toLowerCase()) : [];
+const getWords = x => lowerCase(x.match(/[a-zA-Z]+/g));
+const filterUniqueWords = x => [...new Set(getWords(x).sort())];
 
-console.log(filterUniqueWords(getWords("hello name koala1451 hello koala 121 abc lol")));
+
+module.exports = {filterUniqueWords};
+

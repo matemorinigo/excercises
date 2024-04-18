@@ -1,9 +1,14 @@
 function calculateDiscountedPrice(products, discount){
     let updatedProducts = [];
 
+    if(discount<0)
+        throw Error("Discount cannot be negative");
+
     for(let product of products){
-        //validate price>0?
-        updatedProducts.push((product-(product*(discount/100))));
+
+        if(product.price>0)
+            updatedProducts.push((product.price-(product.price*(discount/100))));
+
     }
 
     return updatedProducts;
@@ -11,4 +16,3 @@ function calculateDiscountedPrice(products, discount){
 
 module.exports = {calculateDiscountedPrice};
 
-console.log(calculateDiscountedPrice([50,100,200,250], 50));
