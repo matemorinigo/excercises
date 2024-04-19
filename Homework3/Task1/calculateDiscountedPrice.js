@@ -6,9 +6,10 @@ function calculateDiscountedPrice(products, discount){
 
     for(let product of products){
 
-        if(product.price>0)
-            updatedProducts.push((product.price-(product.price*(discount/100))));
-
+        if(product.price>0) {
+            product.price -= (product.price * (discount / 100));
+            updatedProducts.push(product);
+        }
     }
 
     return updatedProducts;
