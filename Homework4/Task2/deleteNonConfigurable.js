@@ -6,6 +6,4 @@ function deleteNonConfigurable(obj, prop){
     throw Error("The property is non configurable");
 }
 
-
-
 module.exports = {deleteNonConfigurable};

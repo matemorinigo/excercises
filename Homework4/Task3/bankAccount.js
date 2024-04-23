@@ -24,11 +24,18 @@ let bankAccount = {
         acc2._balance += amount;
     }
 }
+
+const deepCloneObject = require('../Task6/deepCloneObject').deepCloneObject;
 //creating new acc by this way, we cannot modify acc without modifiying bankAccount
-let acc = Object.create(bankAccount);
+let acc = deepCloneObject(bankAccount);
 
 console.log(bankAccount.formattedBalance);
-bankAccount.balance = 500;
+bankAccount.transfer(bankAccount, acc, 100);
 console.log(bankAccount.formattedBalance);
+
+console.log(acc);
+
 console.log(JSON.stringify(acc,null,2));
+
+module.exports = {bankAccount, acc}
 
