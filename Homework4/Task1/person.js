@@ -18,7 +18,7 @@ let person = {
             Object.defineProperty(this, '_email', {value: info.email});
         }
         if(info.address){
-            this._address = {...info.address};
+            this._address = info.address;
 
         }
     },

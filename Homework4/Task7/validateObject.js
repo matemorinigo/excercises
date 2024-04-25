@@ -1,25 +1,29 @@
 function validateObject(obj, schema){
+    let objProps = Object.getOwnPropertyDescriptors(obj);
 
     if(typeof obj !== schema.type)
         return false;
     else{
-        for(let prop in schema.properties){
-            let descriptor = Object.getOwnPropertyDescriptor(obj, prop);
-            if(obj[prop] === undefined)
+        for(let prop in objProps){
+            if(prop in schema.properties){
+                let descriptor = Object.getOwnPropertyDescriptor(obj, prop);
+
+                if(typeof obj[prop] === "object") {
+                    if(!validateObject(obj[prop], schema.properties[prop]))
+                        return false;
+                }
+                else if(typeof obj[prop] !== schema.properties[prop].type)
+                    return false
+                else if(schema.properties[prop].writable !== undefined && descriptor.writable !== schema.properties[prop].writable)
+                    return false;
+                else if(schema.properties[prop].configurable !== undefined && descriptor.configurable !== schema.properties[prop].configurable)
+                    return false;
+                else if(schema.properties[prop].enumerable !== undefined && descriptor.enumerable !== schema.properties[prop].enumerable)
+                    return false;
+            }else
                 return false;
 
-            if(typeof obj[prop] === "object") {
-                if(!validateObject(obj[prop], schema.properties[prop]))
-                    return false;
-            }
-            else if(typeof obj[prop] !== schema.properties[prop].type)
-                return false
-            else if(schema.properties[prop].writable !== undefined && descriptor.writable !== schema.properties[prop].writable)
-                return false;
-            else if(schema.properties[prop].configurable !== undefined && descriptor.configurable !== schema.properties[prop].configurable)
-                return false;
-            else if(schema.properties[prop].enumerable !== undefined && descriptor.enumerable !== schema.properties[prop].enumerable)
-                return false;
+
         }
     }
     return true;
