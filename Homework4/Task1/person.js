@@ -17,6 +17,10 @@ let person = {
         if(info.email){
             Object.defineProperty(this, '_email', {value: info.email});
         }
+        if(info.address){
+            this._address = {...info.address};
+
+        }
     },
 
 }
@@ -40,6 +44,7 @@ Object.defineProperties(person, {
     }
 });
 
-Object.defineProperty(person, '_address', {value: {}, enumerable: false, configurable: false});
+Object.defineProperty(person, '_address', {value: {}, enumerable: false, configurable: false, writable: true});
+
 
 module.exports = {person};

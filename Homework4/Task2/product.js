@@ -1,10 +1,7 @@
 let product = {
     _name: "laptop",
     _price: 1000,
-    _quantity: 5,
-    getTotalPrice(){
-        return Object.getOwnPropertyDescriptor(this, '_price').value * Object.getOwnPropertyDescriptor(this, '_quantity').value;
-    }
+    _quantity: 5
 }
 
 Object.defineProperties(product, {
@@ -17,7 +14,5 @@ Object.defineProperties(product, {
         enumerable: false
     }
 });
-
-console.log(product.getTotalPrice());
 
 module.exports = {product};

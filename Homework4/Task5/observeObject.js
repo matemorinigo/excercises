@@ -2,10 +2,12 @@ const person = require('../Task1/person').person;
 function observeObject(obj, callback){
     return new Proxy(obj, {
         get: function (target, prop){
+            console.log(`${prop} - get`);
             callback(target, prop)
 
         },
         set: function (target, prop){
+            console.log(`${prop} - set`);
             callback(target, prop);
         }
     })

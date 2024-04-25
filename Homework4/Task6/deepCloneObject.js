@@ -1,39 +1,43 @@
 //is this the most efficient way without using libraries?
-function deepCloneObject(obj){
-    let clone = {};
+function deepCloneObject(obj, visited = []){
+    let clone = Array.isArray(obj) ? [] : {};
 
-    let descriptor;
+    if(visited.includes(obj)){
+        return
+    }else{
+        visited.push(obj);
+    }
 
-    for(let key in obj){
-        descriptor = Object.getOwnPropertyDescriptor(obj, key);
+    let descriptor = Object.getOwnPropertyDescriptors(obj);
 
+    for(let key in descriptor) {
         if(typeof obj[key] === 'object'){
             Object.defineProperty(clone, key, {
-                value: deepCloneObject(obj[key]),
-                writable: descriptor.writable,
-                enumerable: descriptor.enumerable,
-                configurable: descriptor.configurable
+                value: deepCloneObject(obj[key], visited),
+                writable: descriptor[key].writable,
+                enumerable: descriptor[key].enumerable,
+                configurable: descriptor[key].configurable
             });
         }else{
 
             if(descriptor.get !== undefined){
                 Object.defineProperty(clone, key, {
-                    get: descriptor.get,
-                    enumerable: descriptor.enumerable,
-                    configurable: descriptor.configurable
+                    get: descriptor[key].get,
+                    enumerable: descriptor[key].enumerable,
+                    configurable: descriptor[key].configurable
                 });
             }else if(descriptor.set !== undefined){
                 Object.defineProperty(clone, key, {
-                    set: descriptor.set,
-                    enumerable: descriptor.enumerable,
-                    configurable: descriptor.configurable
+                    set: descriptor[key].set,
+                    enumerable: descriptor[key].enumerable,
+                    configurable: descriptor[key].configurable
                 });
             }else{
                 Object.defineProperty(clone, key, {
-                    value: obj[key],
-                    writable: descriptor.writable,
-                    enumerable: descriptor.enumerable,
-                    configurable: descriptor.configurable
+                    value: descriptor[key].value,
+                    writable: descriptor[key].writable,
+                    enumerable: descriptor[key].enumerable,
+                    configurable: descriptor[key].configurable
                 });
             }
         }
