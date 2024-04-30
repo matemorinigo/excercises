@@ -17,7 +17,14 @@ let team = [player1,player2,player3,player4,player5,player6,player7,player8,play
 
 console.log(team);
 
-console.log(customFilterUnique(team, (player) => {
-    return player._age > 24;
+let eg = [
+    {name: 'Tomas'},
+    {name: 'Tomas'},
+    {name: 'Ilya'},
+    {name: 'Alexandrina'}
+];
+
+console.log(customFilterUnique(eg, (person) => {
+    return true;
 }))
 
