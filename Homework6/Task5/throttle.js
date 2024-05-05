@@ -11,6 +11,7 @@ function throttle (func, interval){
     }
 }
 
+module.exports = {throttle};
 
 function onScroll(event) {
     // Handle scroll event
