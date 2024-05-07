@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debounce Test</title>
+    <script src="debounce.js"></script>
+</head>
+<body>
+    <input id="search-input">
+
+    <!-- I need this script because nodejs doesn't recognize the object document --->
+    <script>
+        const inputElement = document.getElementById("search-input");
+        inputElement.addEventListener("input", event => {
+            debouncedSearchHandler(event.target.value);
+        });
+    </script>
+</body>
+</html>
