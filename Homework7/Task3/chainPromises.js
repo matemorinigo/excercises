@@ -1,22 +1,10 @@
 function chainPromises(functions){
-    return new Promise((resolve,reject)=>{
-        let countFunctions = functions.length
         let lastPromise;
-        let actualPromise;
+
         for(func of functions){
-
-            if(lastPromise === undefined){
-                lastPromise = Promise.resolve(func());
-            }
-            else{
-                lastPromise = Promise.resolve(lastPromise.then(value =>{
-                    return func(value);
-                }))
-            }
-
+            lastPromise = lastPromise.then(func);
         }
-        resolve(lastPromise);
-    })
+        return lastPromise;
 }
 
 function asyncFunction1() {
