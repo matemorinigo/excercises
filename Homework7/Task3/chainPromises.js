@@ -1,8 +1,11 @@
 function chainPromises(functions){
-        let lastPromise;
+        let lastPromise = undefined;
 
         for(func of functions){
-            lastPromise = lastPromise.then(func);
+            if(lastPromise === undefined)
+                lastPromise = Promise.resolve(func());
+            else
+                lastPromise = lastPromise.then(func);
         }
         return lastPromise;
 }
