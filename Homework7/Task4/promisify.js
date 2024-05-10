@@ -1,6 +1,7 @@
 
 function promisify(callbackStyleFunc){
-    return new function(...args){
+    return function(...args){
+
         return new Promise((resolve, reject) =>{
             callbackStyleFunc(...args,(error,value)=>{
                 if(error)
