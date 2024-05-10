@@ -1,6 +1,8 @@
 class Book{
 
-    constructor()
+    constructor(){
+
+    }
 
 
 }
