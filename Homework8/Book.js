@@ -8,4 +8,10 @@ class Book{
         this._availability = availability;
     }
 
+
+    set availability(value) {
+        this._availability = value;
+    }
 }
+
+module.exports = {Book};
