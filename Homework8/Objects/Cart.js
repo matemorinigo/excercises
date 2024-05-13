@@ -4,13 +4,14 @@ class Cart{
 
     constructor() {
         this._items = [];
-        this._totalPrice = 0;
+        this._partialPrice = 0;
+        this._order = null;
     }
 
     addToCart(item){
         if(item._availability){
             this._items.push(item);
-            this._totalPrice += item.price;
+            this._partialPrice += item.price;
         }
         else
             throw new Error("That product is not available");
@@ -19,7 +20,7 @@ class Cart{
 
     clearCart(){
         this._items = [];
-        this._totalPrice = 0;
+        this._partialPrice = 0;
     }
 
     removeFromCart(item){
@@ -36,26 +37,28 @@ class Cart{
         console.log(this._items);
     }
 
-    finishOrder(){
+    placeOrder(){
         if(this._items === [])
             throw new Error("Cart is empty");
         else
-            return new Order(this._items, this._totalPrice);
+            this._order = new Order(this._items, this._partialPrice);
+    }
+
+    showProductsOrdered(){
+        if(this._order === null)
+            throw new Error("Order is not placed yet");
+        else
+            this._order.showProductsOrdered();
+    }
+
+    showTotalPrice(){
+        if(this._order === null)
+            throw new Error("Order is not placed yet");
+        else
+            this._order.showTotalPrice();
     }
 
 }
-
-let a = new Book('a','a','a', 12.9, 10);
-let b = new Book('b','b','b', 12.9, 10);
-let c = new Book('c','c','c', 12.9, 10);
-
-let cart = new Cart();
-
-cart.addToCart(a);
-cart.addToCart(b);
-cart.removeFromCart(b);
-
-cart.showCart();
 
 
 

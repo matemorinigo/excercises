@@ -8,6 +8,14 @@ class Order{
         this.#decrementAvailability(productsOrdered);
     }
 
+    showProductsOrdered(){
+        console.log(this._productsOrdered);
+    }
+
+    showTotalPrice(){
+        console.log(this._totalPrice);
+    }
+
     #decrementAvailability(productsOrdered){
         for(product of productsOrdered){
             --product._availability;
