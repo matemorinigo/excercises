@@ -16,12 +16,16 @@ class Book{
         console.log("Availability: " + this._availability);
     }
 
-    compare(book){
-        return this._isbn-book.isbn;
+    equals(book){
+        return this._isbn === book.isbn;
     }
 
     get isbn() {
         return this._isbn;
+    }
+
+    get price(){
+        return this._price;
     }
 
     set availability(value) {

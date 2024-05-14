@@ -1,17 +1,15 @@
 const Order = require('./Order').Order;
-const Book = require('./Book').Book;
 class Cart{
 
     constructor() {
         this._items = [];
         this._partialPrice = 0;
-        this._order = null;
     }
 
     addToCart(item){
         if(item._availability){
             this._items.push(item);
-            this._partialPrice += item.price;
+            this._partialPrice += Number(item.price);
         }
         else
             throw new Error("That product is not available");
@@ -27,35 +25,29 @@ class Cart{
         if(!this._items.includes(item))
             throw new Error("That item is not in your cart")
         else{
-            this._items.filter((product) => {
-                //comparison between products
+            this._items = this._items.filter((product) => {
+                return !product.equals(item);
             })
         }
     }
 
     showCart(){
-        console.log(this._items);
+        if(this._items.length === 0)
+            console.log("Cart is empty");
+        else
+            console.log(this._items);
     }
 
     placeOrder(){
         if(this._items === [])
             throw new Error("Cart is empty");
         else
-            this._order = new Order(this._items, this._partialPrice);
+            return new Order(this._items, this._partialPrice);
     }
 
-    showProductsOrdered(){
-        if(this._order === null)
-            throw new Error("Order is not placed yet");
-        else
-            this._order.showProductsOrdered();
-    }
 
-    showTotalPrice(){
-        if(this._order === null)
-            throw new Error("Order is not placed yet");
-        else
-            this._order.showTotalPrice();
+    showPartialPrice(){
+        console.log(this._partialPrice);
     }
 
 }

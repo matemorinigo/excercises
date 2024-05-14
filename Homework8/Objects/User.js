@@ -1,4 +1,4 @@
-const Cart = require('Homework8/Objects/Cart').Cart;
+const Cart = require('./Cart').Cart;
 class User{
 
     static _users = 0;
@@ -9,6 +9,7 @@ class User{
         this._address = address;
         this._userID = ++User._users;
         this._cart = new Cart();
+        this._orders = [];
     }
 
     addToCart(item){
@@ -28,16 +29,27 @@ class User{
     }
 
     placeOrder(){
-        return this._cart.placeOrder();
+        this._orders.push(this._cart.placeOrder());
+        this._cart.clearCart();
     }
 
-    showProductsOrdered(){
-        this._cart.showProductsOrdered();
+    showOrdersPlaced(){
+        if(this._orders.length === 0)
+            console.log("No orders placed yet");
+        else
+            console.log(this._orders);
     }
 
-    showTotalPrice(){
-        this._cart.showTotalPrice();
+    showProductsOrdered(orderID){
+        //search orderID
+
+    }
+
+
+    showPartialPrice(){
+        this._cart.showPartialPrice();
     }
 
 }
 
+module.exports = {User};

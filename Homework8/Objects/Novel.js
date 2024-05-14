@@ -1,4 +1,4 @@
-const Book = require('Homework8/Objects/Book').Book;
+const Book = require('./Book').Book;
 class Novel extends Book{
     constructor(isbn, title, author, price, availability, plot) {
         super(isbn, title, author, price, availability);
@@ -10,5 +10,6 @@ class Novel extends Book{
         console.log("Plot: " + this._plot);
     }
 
-
 }
+
+module.exports = {Novel};

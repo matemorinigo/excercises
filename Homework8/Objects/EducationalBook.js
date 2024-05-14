@@ -1,4 +1,4 @@
-const Book = require('Homework8/Objects/Book').Book;
+const Book = require('./Book').Book;
 
 class EducationalBook extends Book{
     constructor(isbn, title, author, price, availability,topics) {
@@ -9,9 +9,11 @@ class EducationalBook extends Book{
     getInfo() {
         super.getInfo();
         console.log("Topics covered: ")
-        for(topic of topics){
+        for(let topic of this._topics){
             console.log('\t' + topic);
         }
     }
 
 }
+
+module.exports = {EducationalBook};

@@ -17,7 +17,7 @@ class Order{
     }
 
     #decrementAvailability(productsOrdered){
-        for(product of productsOrdered){
+        for(let product of productsOrdered){
             --product._availability;
         }
     }
