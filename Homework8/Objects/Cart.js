@@ -28,6 +28,7 @@ class Cart{
             this._items = this._items.filter((product) => {
                 return !product.equals(item);
             })
+            this._partialPrice -= item.price;
         }
     }
 

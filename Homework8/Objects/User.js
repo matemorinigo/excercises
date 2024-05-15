@@ -41,10 +41,15 @@ class User{
     }
 
     showProductsOrdered(orderID){
-        //search orderID
+       for(let order in this._orders){
+           if(order.orderID === orderID){
+               order.showProductsOrdered();
+               return;
+           }
+       }
 
+       console.log("There is no order with that ID");
     }
-
 
     showPartialPrice(){
         this._cart.showPartialPrice();

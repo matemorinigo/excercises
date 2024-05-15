@@ -8,6 +8,11 @@ class Order{
         this.#decrementAvailability(productsOrdered);
     }
 
+    get orderID(){
+        return this._orderID;
+    }
+
+
     showProductsOrdered(){
         console.log(this._productsOrdered);
     }
