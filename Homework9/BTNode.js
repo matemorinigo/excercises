@@ -1,10 +1,10 @@
 class BTNode{
 
-    constructor(data, left, right , parent) {
+    constructor(data, parent) {
         this._parent = parent;
         this._data = data;
-        this._left = left;
-        this._right = right;
+        this._left = null;
+        this._right = null;
     }
 
     get data() {

@@ -7,7 +7,7 @@ class BinaryTree{
 
     insertSorted(data, cmp){
         if(this._root === null){
-            this._root = new BTNode(data,null,null,null);
+            this._root = new BTNode(data,null);
             return;
         }
 
@@ -31,12 +31,39 @@ class BinaryTree{
         }
 
         if(isOnRight){
-            auxParent.right = new BTNode(data,null,null, auxParent);
+            auxParent.right = new BTNode(data, auxParent);
         }
         else{
-            auxParent.left = new BTNode(data, null, null, auxParent);
+            auxParent.left = new BTNode(data, auxParent);
         }
 
+    }
+
+    traverseInOrder(action, node=this._root){
+        if(node === null)
+            return;
+
+        this.traverseInOrder(action, node.left);
+        action(node);
+        this.traverseInOrder(action, node.right);
+    }
+
+    traversePreOrder(action, node=this._root){
+        if(node === null)
+            return;
+
+        action(node);
+        this.traversePreOrder(action, node.left);
+        this.traversePreOrder(action, node.right);
+    }
+
+    traversePostOrder(action, node=this._root){
+        if(node === null)
+            return;
+
+        this.traversePostOrder(action, node.left);
+        this.traversePostOrder(action, node.right);
+        action(node);
     }
 
     get root(){
@@ -68,8 +95,12 @@ tree.insertSorted(43, (a,b)=>{
     return a-b;
 });
 
-
-
-console.log(tree);
-
+function showData(node){
+    console.log(node.data)
+}
+tree.traverseInOrder(showData);
+console.log();
+tree.traversePreOrder(showData);
+console.log();
+tree.traversePostOrder(showData);
 
