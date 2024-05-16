@@ -47,14 +47,19 @@ class LinkedList{
             throw new Error("The linked list is empty");
 
         let data;
+
+        //auxNode stores the first node and, because of that, the previous node is null
         let auxNode = this._firstNode;
         let prevNode = null;
 
+        //Then I move along the nodes of the linked list, until auxNode is the last node
         while(auxNode.next !== null){
             prevNode = auxNode;
             auxNode = auxNode.next;
         }
 
+        //Because I stored the previous node, I can change the reference to the next node
+        //(that was auxNode) and change it to null
         data = auxNode.data;
         prevNode.next = null;
         return data;
