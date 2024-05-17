@@ -52,11 +52,18 @@ class BinaryTree{
             return;
         }
 
+        //initialize "pointers" to the current node, and the parent of the current node.
         let auxNode = this._root;
         let auxParent = this._root.parent;
+
+        //isOnRight helps to define where the new node would be
         let isOnRight = false;
 
+        //while the current node is not null, means that I have to continue comparing
         while(auxNode){
+
+            //if the data I wanna insert is less than the data in the current node, my parent is the current node
+            //and I have to move to the right -> the opposite if the data is greater than the node data
             if(cmp(auxNode.data,data)<0){
                 auxParent = auxNode;
                 auxNode = auxNode.right;
@@ -69,8 +76,13 @@ class BinaryTree{
             }
             else
                 throw new Error("The element is already on the binary search tree");
+
+            //In a Binary search tree, duplicates are not allowed
         }
 
+        //then, at this point the current node is null so I lost the reference
+        //but in auxParent I have the parent of the new node, so if isOnRight I have to insert the new node in the right
+        //of the parent node
         if(isOnRight){
             auxParent.right = new Node(data, auxParent);
         }

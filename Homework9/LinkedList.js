@@ -132,6 +132,11 @@ class LinkedList{
         }
 
     }
+
+    //Only for the hasACycle function
+    get firstNode(){
+        return this._firstNode;
+    }
 }
 
 module.exports = {LinkedList}
