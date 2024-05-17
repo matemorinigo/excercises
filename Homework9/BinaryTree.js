@@ -1,4 +1,45 @@
-const BTNode = require('./BTNode').BTNode;
+class Node{
+
+    constructor(data, parent) {
+        this._parent = parent;
+        this._data = data;
+        this._left = null;
+        this._right = null;
+    }
+
+    get data() {
+        return this._data;
+    }
+
+    set data(value) {
+        this._data = value;
+    }
+
+    get left() {
+        return this._left;
+    }
+
+    set left(value) {
+        this._left = value;
+    }
+
+    get right() {
+        return this._right;
+    }
+
+    set right(value) {
+        this._right = value;
+    }
+
+
+    get parent() {
+        return this._parent;
+    }
+
+    set parent(value) {
+        this._parent = value;
+    }
+}
 class BinaryTree{
 
     constructor() {
@@ -7,7 +48,7 @@ class BinaryTree{
 
     insertSorted(data, cmp){
         if(this._root === null){
-            this._root = new BTNode(data,null);
+            this._root = new Node(data,null);
             return;
         }
 
@@ -31,11 +72,26 @@ class BinaryTree{
         }
 
         if(isOnRight){
-            auxParent.right = new BTNode(data, auxParent);
+            auxParent.right = new Node(data, auxParent);
         }
         else{
-            auxParent.left = new BTNode(data, auxParent);
+            auxParent.left = new Node(data, auxParent);
         }
+
+    }
+
+    findNodeByKey(key, cmp, node=this._root){
+        if(node!==null){
+            if(cmp(key, node.data)>0)
+                return this.findNodeByKey(key, cmp, node.right);
+            else if(cmp(key, node.data)<0)
+                return this.findNodeByKey(key, cmp, node.left);
+            else
+                return node;
+        }
+        else
+            throw new Error("That key is not in the tree");
+            //or return null :D
 
     }
 
@@ -70,37 +126,16 @@ class BinaryTree{
         return this._root;
     }
 
+    //The setter is only for testing the isBST function
+    set root(value){
+        this._root = value;
+    }
+
 
 }
 
-let tree = new BinaryTree();
+module.exports = {BinaryTree, Node};
 
-tree.insertSorted(55, (a,b)=>{
-    return a-b;
-});
 
-tree.insertSorted(22, (a,b)=>{
-    return a-b;
-});
 
-tree.insertSorted(65, (a,b)=>{
-    return a-b;
-});
-
-tree.insertSorted(35, (a,b)=>{
-    return a-b;
-});
-
-tree.insertSorted(43, (a,b)=>{
-    return a-b;
-});
-
-function showData(node){
-    console.log(node.data)
-}
-tree.traverseInOrder(showData);
-console.log();
-tree.traversePreOrder(showData);
-console.log();
-tree.traversePostOrder(showData);
 

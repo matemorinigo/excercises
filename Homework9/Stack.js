@@ -15,4 +15,10 @@ class Stack{
     peek(){
         return this._linkedList.peekFistNode();
     }
+
+    isEmpty(){
+        return this._linkedList.isEmpty();
+    }
 }
+
+module.exports = {Stack};
