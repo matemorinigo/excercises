@@ -23,6 +23,10 @@ class Node {
     }
 }
 
+//All the cmp functions that are passed by argument could be replaced
+//with for example a method .compare() for the objects that would be stored
+//But for the practicality, is easier to test with a cmp function for the primitive data types
+
 class LinkedList{
     constructor() {
         this._firstNode = null;
@@ -94,6 +98,33 @@ class LinkedList{
             throw new Error("The linked list is empty");
 
         return this._firstNode.data;
+    }
+
+    removeNodeByKey(key,cmp){
+        if(this.isEmpty())
+            throw new Error("The linked list is empty");
+
+        if(cmp(this._firstNode.data, key) === 0){
+            let data = this._firstNode.data;
+            this._firstNode = this._firstNode.next;
+            return data;
+        }
+
+        let prevNode = this._firstNode;
+        let auxNode = this._firstNode;
+
+        while(auxNode !== null){
+            if(cmp(auxNode.data,key) === 0){
+                let data = auxNode.data;
+                prevNode.next = auxNode.next;
+                return data;
+            }
+            prevNode = auxNode;
+            auxNode = auxNode.next;
+
+        }
+
+
     }
 
     findNodeByKey(key, cmp){
