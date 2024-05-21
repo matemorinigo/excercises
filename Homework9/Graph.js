@@ -188,10 +188,14 @@ class Graph{
     breadthFirstSearch(keyFrom, action){
         let originNodeNum = this.numNode(keyFrom);
         let auxNodeNum;
-        let adjMatrix = this.adjMatrix();
+
+        //visited[nodeNumber] stores Infinity if the node wasn't visited, else it stores
+        //the closeness to the origin node
         let visited = [];
         let visitNext = new Queue();
 
+
+        //Initializes the visited array, and enqueue the origin node to visit it
         for(let node of this._nodes){
             visited[node.number] = Infinity;
         }
@@ -203,8 +207,10 @@ class Graph{
             auxNodeNum = visitNext.dequeue();
             action(this._nodes[auxNodeNum]);
 
+            //for each node, if the current node is adjacent and the node i wasn't visited -> enqueue it and store the
+            //closeness to the origin
             for(let i=0;i<this._numNodes;i++){
-                if(adjMatrix[auxNodeNum][i] !== Infinity && visited[i] === Infinity){
+                if(this.isAdjacent(this._nodes[auxNodeNum].key,this._nodes[i].key) && visited[i] === Infinity){
                     visited[i] = visited[auxNodeNum] + 1;
                     visitNext.enqueue(i);
                 }
