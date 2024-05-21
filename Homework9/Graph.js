@@ -1,4 +1,5 @@
 const LinkedList = require("./LinkedList").LinkedList;
+const Queue = require('./Queue').Queue;
 
 class Node{
     constructor(key) {
@@ -182,6 +183,38 @@ class Graph{
         }
 
         return null;
+    }
+
+    breadthFirstSearch(keyFrom, action){
+        let originNodeNum = this.numNode(keyFrom);
+        let auxNodeNum;
+        let adjMatrix = this.adjMatrix();
+        let visited = [];
+        let visitNext = new Queue();
+
+        for(let node of this._nodes){
+            visited[node.number] = Infinity;
+        }
+
+        visited[originNodeNum]=0;
+        visitNext.enqueue(originNodeNum);
+
+        while(!visitNext.isEmpty()){
+            auxNodeNum = visitNext.dequeue();
+            action(this._nodes[auxNodeNum]);
+
+            for(let i=0;i<this._numNodes;i++){
+                if(adjMatrix[auxNodeNum][i] !== Infinity && visited[i] === Infinity){
+                    visited[i] = visited[auxNodeNum] + 1;
+                    visitNext.enqueue(i);
+                }
+            }
+
+        }
+
+        return visited;
+
+
     }
 
     get nodes(){

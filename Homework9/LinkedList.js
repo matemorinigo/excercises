@@ -89,7 +89,13 @@ class LinkedList{
         //Because I stored the previous node, I can change the reference to the next node
         //(that was auxNode) and change it to null
         data = auxNode.data;
-        prevNode.next = null;
+        if(prevNode===null){
+            this._firstNode = null;
+        }else{
+            prevNode.next = null;
+
+        }
+
         return data;
     }
 
