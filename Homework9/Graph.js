@@ -118,6 +118,72 @@ class Graph{
         }
     }
 
+    adjMatrix(){
+        let adjMatrix = [];
+        for(let i = 0; i<this._numNodes; i++){
+            adjMatrix[i] = [];
+            for(let j = 0; j<this._numNodes; j++){
+                if(this.isAdjacent(this._nodes[i].key,this._nodes[j].key)){
+                    adjMatrix[i][j] = this._nodes[i].adjList.findNodeByKey(this._nodes[j].key, (a,b)=>{
+                        let auxKey = this._nodes[a.destination].key;
+                        return auxKey.localeCompare(b);
+                    }).data.weight;
+                }
+                else{
+                    adjMatrix[i][j] = Infinity;
+                }
+            }
+        }
+
+        return adjMatrix;
+    }
+
+    dijkstra(keyFrom, keyTo){
+
+        let distances = {};
+        let previous = {};
+        let unvisited = [];
+
+        for(let node of this._nodes){
+            distances[node.number] = Infinity;
+            previous[node.number] = null;
+            unvisited[node.number] = node;
+        }
+        distances[this.numNode(keyFrom)] = 0;
+
+
+        while(unvisited.length > 0){
+            let currentNode = unvisited.reduce((a,b)=> distances[a.number] < distances[b.number] ? a : b);
+
+            if(currentNode.key === keyTo){
+                let path = [];
+                let current = currentNode;
+
+                while(current !== null){
+                    path.unshift(current.number);
+                    current = previous[current.number];
+                }
+                return path;
+            }
+
+            unvisited = unvisited.filter(value => value.number !== currentNode.number)
+
+            currentNode.adjList.traverseLinkedList((edge)=>{
+                let alternative = distances[currentNode.number] + edge.weight;
+
+                if(alternative < distances[edge.destination]){
+                    distances[edge.destination] = alternative;
+                    previous[edge.destination] = currentNode;
+                }
+            })
+
+
+
+        }
+
+        return null;
+    }
+
     get nodes(){
         return this._nodes;
     }
