@@ -223,6 +223,39 @@ class Graph{
 
     }
 
+    depthFirstSearch(keyFrom, action){
+
+        //Result stores the visited nodes, and visited stores if a node was visited or not
+        let result = [];
+        let visited = {};
+
+        //dfs is a recursive function that does the dfs for each node
+        const dfs = (node)=>{
+            if(node === null)
+                return;
+
+            action(node);
+
+            //mark the visited node as visited, and push it into the result
+            visited[node.number] = true;
+            result.push(node.key);
+
+            //for each adjacent node of the visited node
+            node.adjList.traverseLinkedList((edge)=>{
+                //if the adjacent node was not visited, do the dfs on it
+                if(visited[edge.destination] === undefined){
+                    dfs(this._nodes[edge.destination]);
+                }
+            });
+        }
+
+        //when dfs is invoked for the first time, it will update result because of the scope
+        //so when the recursive calls finish, result have the keys in the order that were visited
+        dfs(this._nodes[this.numNode(keyFrom)]);
+        return result;
+
+    }
+
     get nodes(){
         return this._nodes;
     }

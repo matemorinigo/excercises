@@ -1,27 +1,33 @@
 const Graph = require('../Graph').Graph;
 
 let graph1 = new Graph((a,b)=>{
-    return a.localeCompare(b);
+    return a-b;
 })
 
-graph1.newNode("mateo");
-graph1.newNode("magali");
-graph1.newNode("ramiro");
-graph1.newNode("agustin");
-graph1.newNode("martin");
-graph1.newNode("tomas");
+graph1.newNode(0);
+graph1.newNode(1);
+graph1.newNode(2);
+graph1.newNode(3);
+graph1.newNode(4);
+graph1.newNode(5);
+graph1.newNode(6);
 
 console.log(graph1.nodes);
 
-graph1.newEdge("mateo","ramiro",2)
-graph1.newEdge("mateo","magali",3)
-graph1.newEdge("mateo","martin",3)
-graph1.newEdge("ramiro","agustin",1)
-graph1.newEdge("magali","agustin",1)
-graph1.newEdge("martin","agustin",1)
-graph1.newEdge("agustin","tomas",1)
+graph1.newEdge(0,6,1);
+graph1.newEdge(0,5,1);
+graph1.newEdge(0,1,1);
 
-console.log(graph1.breadthFirstSearch("mateo",node=>console.log(node.key)));
+graph1.newEdge(1,5,1);
+graph1.newEdge(1,4,1);
+graph1.newEdge(1,3,1);
+
+graph1.newEdge(4,6,1);
+graph1.newEdge(4,2,1);
+graph1.newEdge(6,0,1);
+//graph1.showGraph();
+
+console.log(graph1.depthFirstSearch(0,node=>console.log(node.key)));
 
 
 
