@@ -21,10 +21,20 @@ class HashTable{
 
     insert(key,value){
         let index = this._getHash(key);
+        let keyExists = false
+
         if(this._table[index] === undefined)
             this._table[index] = {linkedList: new LinkedList()};
 
-        this._table[index].linkedList.insertAtBeginning({key:key, value:value});
+        this._table[index].linkedList.traverseLinkedList((obj)=>{
+            if(key.localeCompare(obj.key)===0) {
+                obj.value = value;
+                keyExists = true;
+            }
+        })
+
+        if(!keyExists)
+            this._table[index].linkedList.insertAtBeginning({key:key, value:value});
 
     }
 
