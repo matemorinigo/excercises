@@ -6,17 +6,17 @@ const strings = require('../hashFunction').strings;
 let ht = new HashTable(100,myHash);
 let appearances = []
 
-/*for(let i=0; i<strings.length; i++){
+for(let i=0; i<strings.length; i++){
     if(appearances[i] === undefined)
         appearances[i] = 1;
     else
         appearances[i]++;
 
     ht.insert(strings[i],Math.random()*100);
-}*/
+}
 
-ht.insert("key1","value1");
-ht.insert("key1","value2");
+/*ht.insert("key1","value1");
+ht.insert("key1","value2");*/
 ht.showHashTable();
 //console.log("*********************");
 //
