@@ -9,7 +9,7 @@ function strToJsType(string){
     let numRegex = /^\d+$/;
     let bigIntRegex = /^\d+n$/;
     let undefinedRegex = /^undefined$/;
-    let objectRegex = /{.*}/
+    let objectRegex = /^{.*}$/
 
     if(string.match(strRegex))
         return string.slice(1,string.length-1);
@@ -57,11 +57,39 @@ function myJSONParse(str) {
     return result;
 }
 
+/*
+* About the main regex, that matches with the key:value syntax I had some problems
+*
+* First, I was trying to do this
+*
+* "\w+":\s\w+(,\s | }$) because I thought it was a way to match with the end of the main object,
+* or with the comma that separates the objects. This obviously didnt work.
+*
+* Then, I realized that the array returned by string.match(regex) had something like this
+* [theMatchingString, ", " (or }), and the other elements that match have]
+*
+* so I learnt that with () I store that part of the matching string, but the regex didnt work yet.
+*
+* My other approach was try to handle 1 nested object, so I tried with "\w+":\s(\w+|{[something???]})(,\s | }$)
+*
+* but because of the regex's last part (,\s | }$) it was doing something different. So I removed it, and it was better
+*
+* At that moment I knew that inside the brackets {[something???]} the objects couldnt have another brackets
+* so at that moment I had /"(\w+)":(\w+|{[^{}]*})/ but it couldnt handle numeric values
+*
+* Then I realized that if it hadn't a comma or a closing bracket it means that will match with anything inside
+*
+* so I did that, /"(\w+)":([^,}]|{[^{}]*})/
+*
+* With the data type matching regex the thing was easier. The only problem I had was with the strings because they were
+* stored as key: '"string"' so I fixed it slicing the string, and the same with the bigints values slicing the n to
+* convert it in real BigInt
+*
+*
+* */
 
-
-let text = "\"attr3\": {\"id\":44n, \"isReal\":\"asd\"}, \"attr1\": \"value1\", \"attr2\": 123, \"isFalse\":false, \"undefined\":undefined"
+let text = "{\"attr3\": {\"id\":44n, \"isReal\":\"asd\"}, \"attr1\": \"value1\", \"attr2\": 123, \"isFalse\":false, \"undefined\":undefined}"
 console.log(myJSONParse(text));
 
-console.log()
 
 
