@@ -70,6 +70,7 @@ function myJSONParse(str) {
 *
 * so I learnt that with () I store that part of the matching string, but the regex didnt work yet.
 *
+*
 * My other approach was try to handle 1 nested object, so I tried with "\w+":\s(\w+|{[something???]})(,\s | }$)
 *
 * but because of the regex's last part (,\s | }$) it was doing something different. So I removed it, and it was better
